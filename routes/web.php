@@ -58,4 +58,7 @@ Route::group(['middleware' => ['auth','admin']], function () {
      Route::get('/allPatient','PatientFormController@index');
      Route::get('/singlePatient/{id}','PatientFormController@show');
 
+     //prescription
+     Route::post('/prescribe','PrescribeController@store');
+
   });

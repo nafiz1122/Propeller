@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\PatientForm;
-use App\User;
 use App\Prescribe;
 use Illuminate\Http\Request;
-
-class PatientFormController extends Controller
+use Auth;
+class PrescribeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +14,7 @@ class PatientFormController extends Controller
      */
     public function index()
     {
-        $patient= PatientForm::all();
-        return view('admin.patient.allPatient',compact('patient'));
+        //
     }
 
     /**
@@ -38,30 +35,35 @@ class PatientFormController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $prescribe = new Prescribe;
+        $prescribe->user_id = Auth::id();
+        $prescribe->patient_id =  $request->patient_id;
+        $prescribe->prescription =  $request->prescription;
+
+        $prescribe->save();
+        return back();
+
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\PatientForm  $patientForm
+     * @param  \App\Prescribe  $prescribe
      * @return \Illuminate\Http\Response
      */
-    public function show(PatientForm $patientForm,$id)
+    public function show(Prescribe $prescribe)
     {
-        $patient = PatientForm::find($id);
-        $prescribe =Prescribe::where('patient_id',$id)->get();
-
-        return view('admin.patient.viewPatient',compact('patient','prescribe'));
+        //
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\PatientForm  $patientForm
+     * @param  \App\Prescribe  $prescribe
      * @return \Illuminate\Http\Response
      */
-    public function edit(PatientForm $patientForm)
+    public function edit(Prescribe $prescribe)
     {
         //
     }
@@ -70,10 +72,10 @@ class PatientFormController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\PatientForm  $patientForm
+     * @param  \App\Prescribe  $prescribe
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PatientForm $patientForm)
+    public function update(Request $request, Prescribe $prescribe)
     {
         //
     }
@@ -81,10 +83,10 @@ class PatientFormController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\PatientForm  $patientForm
+     * @param  \App\Prescribe  $prescribe
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PatientForm $patientForm)
+    public function destroy(Prescribe $prescribe)
     {
         //
     }
